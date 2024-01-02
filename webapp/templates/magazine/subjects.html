@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="news">
+    <h2 style="font-size:30px;">{{ page_title }}</h2>
+    <br>
+    {% if subjects %}
+        {% for subj in subjects %}
+        <h3><a href="{{ url_for('magazine.single_subj', subj_id=subj.id) }}">{{ subj.subject }}</a></h3>
+        <br>
+        {% endfor %}
+    {% else %}
+        <h3>Предметы временно не доступны!</h3>
+    {% endif %}
+</div>
+<div class="news">
+    <h2 style="font-size:30px;">Добавить Предмет</h2>
+<br>
+    <form action="{{ url_for('magazine.process_subjects') }}" method="POST">
+        {{ subj_form.hidden_tag() }}
+        <div class="form-group">
+            {{ subj_form.subj.label }}
+            <br>
+            {{ subj_form.subj() }}
+        </div>
+        <br>
+        {{ subj_form.submit() }}
+    </form>
+</div>
+{% endblock %}
+

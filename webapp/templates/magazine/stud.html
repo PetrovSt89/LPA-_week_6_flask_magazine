@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+<li>
+<div class="admin">
+    <h2 style="font-size:30px;">Журнал</h2>
+    {% if sel_form %}
+    <div>
+        <br>
+        <form action="{{ url_for('magazine.process_stud') }}" method="POST">
+            {{ sel_form.hidden_tag() }}
+            <div class="form-group">
+                {{ sel_form.course.label }}
+                <br>
+                {{ sel_form.course() }}
+            </div>
+            <div class="form-group">
+                {{ sel_form.subj.label }}
+                <br>
+                {{ sel_form.subj() }}
+            </div>
+            {{ sel_form.submit() }}
+        </form>
+    </div> 
+    {% endif %}
+    {% if stud %}
+    <table>
+
+        <thead>
+          <tr>
+            <th>ID ученика</th>
+            <th>Имя ученика</th>
+            <th>Фамилия ученика</th>
+            <th>Класс</th>
+            <th>Предмет</th>
+            <th>Оценка ученика</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for one_stud in stud %}
+                <tr>
+                    <th>{{ one_stud.id }}</th>
+                    <th>{{ one_stud.student_name }}</th>
+                    <td>{{ one_stud.student_surname }}</td>
+                    <td>{% for one_course in course %}
+                        {% if one_course.id == one_stud.course_id %}
+                        {{ one_course.course_name }}
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{% for subj in subject %}
+                        {% if subj.id == one_stud.subj_id %}
+                        {{ subj.subject }}
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{% for gr in grades %}
+                            {% if gr.student_id == one_stud.id %}
+                                {{ gr.grades_name }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+</li>
+
+<li>
+{% if grade_form %}
+<div class="admin">
+    <h2 style="font-size:30px;">Поставить оценку</h2>
+    
+    <form action="{{ url_for('magazine.process_grade') }}" method="POST">
+        {{ grade_form.hidden_tag() }}
+        <div class="form-group">
+            {{ grade_form.student_id.label }}
+            <br>
+            {{ grade_form.student_id() }}
+        </div>
+        <div class="form-group">
+            {{ grade_form.subj.label }}
+            <br>
+            {{ grade_form.subj() }}
+        </div>
+        <div class="form-group">
+            {{ grade_form.grade_name.label }}
+            <br>
+            {{ grade_form.grade_name() }}
+        </div>
+        {{ grade_form.submit() }}
+    </form>
+    
+</div>
+{% endif %}
+</li>
+</ul>
+
+{% endblock %}
+

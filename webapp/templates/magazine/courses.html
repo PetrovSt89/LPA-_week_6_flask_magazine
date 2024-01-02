@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="news">
+    <h2 style="font-size:30px;">{{ page_title }}</h2>
+    <br>
+    {% if courses %}
+        {% for course in courses %}
+        <h3><a href="{{ url_for('magazine.single_course', course_id=course.id) }}">{{ course.course_name }}</a></h3>
+        <br>
+        {% endfor %}
+    {% else %}
+        <h3>Предметы временно не доступны!</h3>
+    {% endif %}
+</div> 
+<div class="news">
+    <h2 style="font-size:30px;">Добавить Класс</h2>
+<br>
+    <form action="{{ url_for('magazine.process_course') }}" method="POST">
+        {{ course_form.hidden_tag() }}
+        <div class="form-group">
+            {{ course_form.course.label }}
+            <br>
+            {{ course_form.course() }}
+        </div>
+        <br>
+        {{ course_form.submit() }}
+    </form>
+</div>
+{% endblock %}
+

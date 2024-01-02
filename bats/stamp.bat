@@ -1,0 +1,1 @@
+set FLASK_APP=webapp && flask db stamp 9f386bbaaf40
