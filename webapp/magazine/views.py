@@ -1,7 +1,6 @@
 from webapp.config import city
 from flask import abort, Blueprint, render_template, flash, redirect, request, url_for
 from flask_login import current_user, login_required
-from webapp.parse_weather import weather_class
 from webapp.magazine.models import Comment, News
 from webapp.magazine.forms import CommentForm, SelectionForm, GradeForm, SubjForm, CourseForm
 
